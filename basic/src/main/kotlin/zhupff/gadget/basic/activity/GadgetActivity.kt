@@ -21,8 +21,6 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         TAG.logV("onAttachedToWindow()")
-        windowInsetsControllerCompat = WindowInsetsControllerCompat(window, window.decorView)
-        windowInsetsControllerCompat.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -33,6 +31,8 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TAG.logV("onCreate($savedInstanceState)")
+        windowInsetsControllerCompat = WindowInsetsControllerCompat(window, window.decorView)
+        windowInsetsControllerCompat.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     override fun onRestart() {

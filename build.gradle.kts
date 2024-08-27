@@ -2,6 +2,9 @@ buildscript {
     dependencies {
         classpath("zhupff.gadgets:gadget-basic:0")
         classpath("zhupff.gadgets:gadget-logger:0")
+        classpath("zhupff.gadgets:gadget-theme:0")
+        classpath("zhupff.gadgets:gadget-toast:0")
+        classpath("zhupff.gadgets:gadget-widget:0")
     }
 }
 plugins {
