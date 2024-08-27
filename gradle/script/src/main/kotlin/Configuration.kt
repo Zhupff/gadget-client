@@ -104,6 +104,38 @@ abstract class Configuration<S : Script> internal constructor(
 
 
 
+    class ThemeConfiguration(
+        script: ThemeScript,
+        val namespace: String,
+    ) : Configuration<ThemeScript>(
+        script,
+    ) {
+        override fun configure() {
+            with(script.project) {
+                applicationExtension.apply {
+                    namespace = this@ThemeConfiguration.namespace
+                    compileSdk = 33
+                    defaultConfig {
+                        minSdk = 24
+                        applicationId = this@ThemeConfiguration.namespace
+                    }
+                    buildTypes {
+                        debug {
+                            isMinifyEnabled = true
+                            isShrinkResources = false
+                        }
+                        release {
+                            isMinifyEnabled = true
+                            isShrinkResources = false
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
     class JvmConfiguration(
         script: JvmScript,
     ) : Configuration<JvmScript>(
@@ -138,6 +170,13 @@ fun LibraryScript.configuration(
     closure: Configuration.AndroidConfiguration.LibraryConfiguration.() -> Unit = {},
 ) {
     Configuration.AndroidConfiguration.LibraryConfiguration(this, namespace).closure()
+}
+
+fun ThemeScript.configuration(
+    namespace: String,
+    closure: Configuration.ThemeConfiguration.() -> Unit = {},
+) {
+    Configuration.ThemeConfiguration(this, namespace).closure()
 }
 
 fun JvmScript.configuration(

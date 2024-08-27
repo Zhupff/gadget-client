@@ -29,6 +29,10 @@ gradlePlugin {
             id = "gadget.library"
             implementationClass = "LibraryScript"
         }
+        register("ThemeScript") {
+            id = "gadget.theme"
+            implementationClass = "ThemeScript"
+        }
         register("JvmScript") {
             id = "gadget.jvm"
             implementationClass = "JvmScript"

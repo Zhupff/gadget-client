@@ -1,5 +1,6 @@
 import zhupff.gadgets.basic.Basic
 import zhupff.gadgets.logger.Logger
+import zhupff.gadgets.theme.Theme
 import zhupff.gadgets.widget.Widget
 
 plugins {
@@ -21,6 +22,9 @@ gadgets {
     }
     Logger {
         logger("api")
+    }
+    Theme {
+        theme("api")
     }
     Widget {
         widget("api")

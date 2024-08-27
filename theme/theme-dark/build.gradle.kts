@@ -1,22 +1,18 @@
 import zhupff.gadgets.theme.Theme
 
 plugins {
-    id("gadget.application")
+    id("gadget.theme")
     id("zhupff.gadgets")
 }
 
 script {
-    configuration("zhupff.gadget") {
+    configuration("zhupff.gadget.theme.dark") {
         configure()
-    }
-    dependency {
-        basic {
-        }
     }
 }
 
 gadgets {
     Theme {
-        themeMerge()
+        themePack()
     }
 }

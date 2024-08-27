@@ -53,6 +53,23 @@ class LibraryScript : Script() {
 
 
 
+class ThemeScript : Script() {
+
+    override val configuration: Configuration.ThemeConfiguration
+        get() = this[Configuration::class.java] as Configuration.ThemeConfiguration
+
+    override val dependency: Dependency<ThemeScript>
+        get() = this[Dependency::class.java] as Dependency<ThemeScript>
+
+    override fun apply(target: Project) {
+        super.apply(target)
+        target.pluginManager.apply("com.android.application")
+        target.extensions.add(ThemeScript::class.java, "script", this)
+    }
+}
+
+
+
 class JvmScript : Script() {
 
     override val configuration: Configuration.JvmConfiguration
