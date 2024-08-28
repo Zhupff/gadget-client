@@ -6,12 +6,16 @@ import zhupff.gadgets.widget.Widget
 plugins {
     id("gadget.library")
     id("zhupff.gadgets")
+    alias(gvc.plugins.kotlin.kapt)
     alias(gvc.plugins.kotlin.ksp)
 }
 
 script {
     configuration("zhupff.gadget.basic") {
         configure()
+    }
+    dependency {
+        autoService("kapt")
     }
 }
 
@@ -25,6 +29,9 @@ gadgets {
     }
     Theme {
         theme("api")
+        annotation("api")
+        dsl("api")
+        compile("ksp")
     }
     Widget {
         widget("api")

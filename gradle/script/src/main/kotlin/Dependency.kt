@@ -21,6 +21,19 @@ class Dependency<S : Script> internal constructor(
 
 
 
+    // region begin: third-part dependencies
+
+    fun autoService(compile: String = "") {
+        dependencies.add("implementation", gvc.findLibrary("autoservice-annotation").get())
+        if (compile.isNotEmpty()) {
+            dependencies.add(compile, gvc.findLibrary("autoservice-processor").get())
+        }
+    }
+
+    // region end
+
+
+
     fun basic(
         closure: Basic.() -> Unit = {},
     ) {

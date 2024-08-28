@@ -4,9 +4,12 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
+import zhupff.gadget.basic.theme.THEME_CONFIG
 import zhupff.gadgets.basic.OnConfigurationChangedDispatcher
 import zhupff.gadgets.basic.OnConfigurationChangedListener
 import zhupff.gadgets.logger.logV
+import zhupff.gadgets.theme.ThemeDispatcher
+import zhupff.gadgets.theme.ThemeFactory
 import java.util.concurrent.CopyOnWriteArraySet
 
 abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispatcher {
@@ -29,6 +32,9 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (this is ThemeDispatcher) {
+            enableThemeInflate()
+        }
         super.onCreate(savedInstanceState)
         TAG.logV("onCreate($savedInstanceState)")
         windowInsetsControllerCompat = WindowInsetsControllerCompat(window, window.decorView)
@@ -94,5 +100,12 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
 
     override fun clearOnConfigurationChangedListeners() {
         onConfigurationChangedListeners.clear()
+    }
+
+    protected open fun enableThemeInflate() {
+        layoutInflater.factory2 = ThemeFactory(
+            layoutInflater.factory2,
+            THEME_CONFIG,
+        )
     }
 }
