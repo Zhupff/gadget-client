@@ -25,6 +25,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Gadget"
 include(":app")
-include(":basic")
+include(
+    ":basic",
+    ":basic:http"
+)
 include(":theme:theme-dark")
  

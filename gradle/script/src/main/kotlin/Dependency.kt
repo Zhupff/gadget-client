@@ -42,6 +42,10 @@ class Dependency<S : Script> internal constructor(
     }
 
     inner class Basic internal constructor() {
+
+        fun http() {
+            dependencies.add("implementation", project(":basic:http"))
+        }
     }
 }
 

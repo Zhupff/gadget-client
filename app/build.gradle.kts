@@ -11,6 +11,7 @@ script {
     }
     dependency {
         basic {
+            http()
         }
     }
 }
