@@ -8,7 +8,6 @@ import zhupff.gadget.basic.theme.THEME_CONFIG
 import zhupff.gadgets.basic.OnConfigurationChangedDispatcher
 import zhupff.gadgets.basic.OnConfigurationChangedListener
 import zhupff.gadgets.logger.logV
-import zhupff.gadgets.theme.ThemeDispatcher
 import zhupff.gadgets.theme.ThemeFactory
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -32,9 +31,7 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (this is ThemeDispatcher) {
-            enableThemeInflate()
-        }
+        enableThemeInflate()
         super.onCreate(savedInstanceState)
         TAG.logV("onCreate($savedInstanceState)")
         windowInsetsControllerCompat = WindowInsetsControllerCompat(window, window.decorView)

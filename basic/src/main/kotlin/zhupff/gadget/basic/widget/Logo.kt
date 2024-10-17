@@ -1,28 +1,28 @@
 package zhupff.gadget.basic.widget
 
-import android.content.Context
-import android.util.AttributeSet
+import android.annotation.SuppressLint
 import android.view.View
+import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import zhupff.gadget.basic.GADGET
 import zhupff.gadget.basic.R
-import zhupff.gadgets.widget.WidgetDsl
+import zhupff.gadgets.theme.DslScope
+import zhupff.gadgets.widget.dsl.asViewId
 import zhupff.gadgets.widget.dsl.center
 import zhupff.gadgets.widget.dsl.findViewById
 import zhupff.gadgets.widget.dsl.infinite
 import zhupff.gadgets.widget.dsl.linearInterpolator
 import zhupff.gadgets.widget.dsl.rotationAnimator
 
-@WidgetDsl("Logo")
-class Logo @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : ConstraintLayout(context, attrs) {
+@SuppressLint("StaticFieldLeak", "ViewConstructor")
+object Logo : ConstraintLayout(GADGET) {
 
-    companion object {
-        private const val ID_PART_A = "partA"
-        private const val ID_PART_B = "partB"
-    }
+    const val ID_LOGO = "logo"
+    private const val ID_PART_A = "partA"
+    private const val ID_PART_B = "partB"
 
     init {
+        id = ID_LOGO.asViewId
         ConstraintLayout(
             id = ID_PART_A,
             layoutParams = ConstraintLayoutParams(0, 0).apply {
@@ -81,4 +81,35 @@ class Logo @JvmOverloads constructor(
         super.onDetachedFromWindow()
         rotationAnimation.end()
     }
+}
+
+inline fun ViewGroup.Logo(
+    index: Int = -1,
+    block: (@DslScope Logo).(Logo) -> Unit,
+) = apply {
+    val logoParent = Logo.parent as? ViewGroup
+    if (logoParent !== this) {
+        logoParent?.removeView(Logo)
+    }
+    addView(Logo, index)
+    Logo.block(Logo)
+}
+
+inline fun ViewGroup.Logo(
+    size: Pair<Int, Int>,
+    index: Int = -1,
+    block: (@DslScope Logo).(Logo) -> Unit,
+) = Logo(ViewGroup.LayoutParams(size.first, size.second), index, block)
+
+inline fun ViewGroup.Logo(
+    layoutParams: ViewGroup.LayoutParams,
+    index: Int = -1,
+    block: (@DslScope Logo).(Logo) -> Unit,
+) = apply {
+    val logoParent = Logo.parent as? ViewGroup
+    if (logoParent !== this) {
+        logoParent?.removeView(Logo)
+    }
+    addView(Logo, index, layoutParams)
+    Logo.block(Logo)
 }

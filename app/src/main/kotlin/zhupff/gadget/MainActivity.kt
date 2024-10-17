@@ -21,6 +21,19 @@ class MainActivity : GadgetActivity(), ThemeDispatcher {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            splashScreen.setOnExitAnimationListener { splashScreenView ->
+//                val iconView = splashScreenView.iconView
+//                splashScreenView.remove()
+//                setSplashView(iconView?.width ?: 256.dp, iconView?.height ?: 256.dp)
+//            }
+//        } else {
+//            setSplashView()
+//        }
+        setSplashView()
+    }
+
+    private fun setSplashView(logoWidth: Int = 256.dp, logoHeight: Int = 256.dp) {
         setContentView(
             FrameLayout(
                 this,
