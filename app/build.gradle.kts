@@ -12,6 +12,7 @@ script {
     dependency {
         basic {
             http()
+            qrcode()
         }
     }
 }

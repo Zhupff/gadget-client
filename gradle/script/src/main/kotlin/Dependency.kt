@@ -46,6 +46,10 @@ class Dependency<S : Script> internal constructor(
         fun http() {
             dependencies.add("implementation", project(":basic:http"))
         }
+
+        fun qrcode() {
+            dependencies.add("implementation", project(":basic:qrcode"))
+        }
     }
 }
 

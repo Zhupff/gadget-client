@@ -1,6 +1,7 @@
 import zhupff.gadgets.basic.Basic
 import zhupff.gadgets.logger.Logger
 import zhupff.gadgets.theme.Theme
+import zhupff.gadgets.toast.Toast
 import zhupff.gadgets.widget.Widget
 
 plugins {
@@ -32,6 +33,9 @@ gadgets {
         annotation("api")
         dsl("api")
         compile("ksp")
+    }
+    Toast {
+        toast("api")
     }
     Widget {
         widget("api")

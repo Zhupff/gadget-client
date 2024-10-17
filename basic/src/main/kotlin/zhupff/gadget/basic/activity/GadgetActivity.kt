@@ -10,10 +10,14 @@ import zhupff.gadgets.basic.OnConfigurationChangedListener
 import zhupff.gadgets.logger.logV
 import zhupff.gadgets.theme.ThemeFactory
 import java.util.concurrent.CopyOnWriteArraySet
+import java.util.concurrent.atomic.AtomicInteger
 
 abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispatcher {
+    companion object {
+        private val ID = AtomicInteger(0)
+    }
 
-    protected open val TAG: String = "${this::class.java.simpleName}(${hashCode()})"
+    val ID_TAG: String = "${this::class.java.simpleName}(${hashCode()})[${ID.getAndIncrement()}]"
 
     protected val onConfigurationChangedListeners = CopyOnWriteArraySet<OnConfigurationChangedListener>()
 
@@ -22,70 +26,70 @@ abstract class GadgetActivity : AppCompatActivity(), OnConfigurationChangedDispa
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        TAG.logV("onAttachedToWindow()")
+        ID_TAG.logV("onAttachedToWindow()")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        TAG.logV("onRestoreInstanceState($savedInstanceState)")
+        ID_TAG.logV("onRestoreInstanceState($savedInstanceState)")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableThemeInflate()
         super.onCreate(savedInstanceState)
-        TAG.logV("onCreate($savedInstanceState)")
+        ID_TAG.logV("onCreate($savedInstanceState)")
         windowInsetsControllerCompat = WindowInsetsControllerCompat(window, window.decorView)
         windowInsetsControllerCompat.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     override fun onRestart() {
         super.onRestart()
-        TAG.logV("onRestart()")
+        ID_TAG.logV("onRestart()")
     }
 
     override fun onStart() {
         super.onStart()
-        TAG.logV("onStart()")
+        ID_TAG.logV("onStart()")
     }
 
     override fun onResume() {
         super.onResume()
-        TAG.logV("onResume()")
+        ID_TAG.logV("onResume()")
     }
 
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
         super.onTopResumedActivityChanged(isTopResumedActivity)
-        TAG.logV("onTopResumedActivityChanged($isTopResumedActivity)")
+        ID_TAG.logV("onTopResumedActivityChanged($isTopResumedActivity)")
     }
 
     override fun onPause() {
         super.onPause()
-        TAG.logV("onPause()")
+        ID_TAG.logV("onPause()")
     }
 
     override fun onStop() {
         super.onStop()
-        TAG.logV("onStop()")
+        ID_TAG.logV("onStop()")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        TAG.logV("onDestroy()")
+        ID_TAG.logV("onDestroy()")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        TAG.logV("onSaveInstanceState(${outState})")
+        ID_TAG.logV("onSaveInstanceState(${outState})")
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        TAG.logV("onDetachedFromWindow()")
+        ID_TAG.logV("onDetachedFromWindow()")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        TAG.logV("onConfigurationChanged($newConfig)")
+        ID_TAG.logV("onConfigurationChanged($newConfig)")
         onConfigurationChangedListeners.forEach { it.onConfigurationChanged(newConfig) }
     }
 

@@ -8,14 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import zhupff.gadgets.basic.OnConfigurationChangedDispatcher
 import zhupff.gadgets.basic.OnConfigurationChangedListener
 import zhupff.gadgets.logger.logV
 import java.util.concurrent.CopyOnWriteArraySet
+import java.util.concurrent.atomic.AtomicInteger
 
 abstract class GadgetFragment : Fragment(), OnConfigurationChangedDispatcher {
 
-    protected open val TAG: String = "${this::class.java.simpleName}(${hashCode()})"
+    companion object {
+        private val ID = AtomicInteger(0)
+    }
+
+    val ID_TAG: String = "${this::class.java.simpleName}(${hashCode()})[${ID.getAndIncrement()}]"
 
     protected lateinit var windowInsetsControllerCompat: WindowInsetsControllerCompat
         private set
@@ -24,17 +30,17 @@ abstract class GadgetFragment : Fragment(), OnConfigurationChangedDispatcher {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        TAG.logV("onAttach($context)")
+        ID_TAG.logV("onAttach($context)")
         windowInsetsControllerCompat = WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TAG.logV("onCreate($savedInstanceState)")
+        ID_TAG.logV("onCreate($savedInstanceState)")
     }
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        TAG.logV("onCreateView($inflater, $container, $savedInstanceState)")
+        ID_TAG.logV("onCreateView($inflater, $container, $savedInstanceState)")
         return createView(inflater, container, savedInstanceState) ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -42,47 +48,47 @@ abstract class GadgetFragment : Fragment(), OnConfigurationChangedDispatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        TAG.logV("onViewCreated($view, $savedInstanceState)")
+        ID_TAG.logV("onViewCreated($view, $savedInstanceState)")
     }
 
     override fun onStart() {
         super.onStart()
-        TAG.logV("onStart()")
+        ID_TAG.logV("onStart()")
     }
 
     override fun onResume() {
         super.onResume()
-        TAG.logV("onResume()")
+        ID_TAG.logV("onResume()")
     }
 
     override fun onPause() {
         super.onPause()
-        TAG.logV("onPause()")
+        ID_TAG.logV("onPause()")
     }
 
     override fun onStop() {
         super.onStop()
-        TAG.logV("onStop()")
+        ID_TAG.logV("onStop()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        TAG.logV("onDestroyView()")
+        ID_TAG.logV("onDestroyView()")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        TAG.logV("onDestroy()")
+        ID_TAG.logV("onDestroy()")
     }
 
     override fun onDetach() {
         super.onDetach()
-        TAG.logV("onDetach()")
+        ID_TAG.logV("onDetach()")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        TAG.logV("onConfigurationChanged($newConfig)")
+        ID_TAG.logV("onConfigurationChanged($newConfig)")
         onConfigurationChangedListeners.forEach { it.onConfigurationChanged(newConfig) }
     }
 
@@ -94,5 +100,21 @@ abstract class GadgetFragment : Fragment(), OnConfigurationChangedDispatcher {
 
     override fun clearOnConfigurationChangedListeners() {
         onConfigurationChangedListeners.clear()
+    }
+
+
+    fun addSelf(fragmentManager: FragmentManager, container: ViewGroup) {
+        addSelf(fragmentManager, container.id)
+    }
+    fun addSelf(fragmentManager: FragmentManager, containerId: Int) {
+        fragmentManager.beginTransaction()
+            .add(containerId, this, ID_TAG)
+            .commitAllowingStateLoss()
+    }
+
+    fun removeSelf() {
+        parentFragmentManager.beginTransaction()
+            .remove(this)
+            .commitAllowingStateLoss()
     }
 }

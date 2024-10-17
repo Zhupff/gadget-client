@@ -27,7 +27,8 @@ rootProject.name = "Gadget"
 include(":app")
 include(
     ":basic",
-    ":basic:http"
+    ":basic:http",
+    ":basic:qrcode",
 )
 include(":theme:theme-dark")
  

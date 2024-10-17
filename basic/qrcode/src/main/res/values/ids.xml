@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="qrcode_decode" type="id"/>
+    <item name="qrcode_decode_success" type="id"/>
+    <item name="qrcode_decode_fail" type="id"/>
+    <item name="qrcode_quit" type="id"/>
+</resources>

@@ -1,6 +1,7 @@
 package zhupff.gadget.basic.widget
 
 import android.annotation.SuppressLint
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -33,6 +34,9 @@ private object WidgetDsl {
 
     @WidgetDsl("Guideline")
     private val guideline: Guideline? = null
+
+    @WidgetDsl("TextureView")
+    private val textureView: TextureView? = null
 
 
 
